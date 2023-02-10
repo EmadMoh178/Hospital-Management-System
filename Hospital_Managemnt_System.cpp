@@ -4,7 +4,7 @@ using namespace std;
 
 struct doctor{
     int id, age;
-    char name[30], spec[20];
+    char name[30], spec[30];
 };
 
 void writeDoctor(){
@@ -13,9 +13,11 @@ void writeDoctor(){
     char c;
     do{
         cout << "Enter ID: ", cin >> d1.id;
-        cout << "Enter name: ", cin >> d1.name;
+        cin.ignore();
+        cout << "Enter name: "; cin.getline(d1.name, 30);
         cout << "Enter age: ", cin >> d1.age;
-        cout << "Enter Specialization: ", cin >> d1.spec;
+        cin.ignore();
+        cout << "Enter Specialization: ", cin.getline(d1.spec, 30);
         f.write((char*) &d1, sizeof(d1));
         cout << "Do you want to add another doctor Y/N? ";
         cin >> c;
@@ -77,12 +79,14 @@ void updateDoctor(){
             if(d1.id == key){
                 cout << "Enter New ID: ";
                 cin >> d1.id;
+                cin.ignore();
                 cout << "Enter new Name: ";
-                cin >> d1.name;
+                cin.getline(d1.name, 30);
                 cout << "Enter New Age: ";
                 cin >> d1.age;
+                cin.ignore();
                 cout << "Enter new specialization: ";
-                cin >> d1.spec;
+                cin.getline(d1.spec, 30);
                 int pos = f.tellg(), size = sizeof(d1);
                 f.seekp(pos - size, ios::beg);
                 f.write((char*) &d1, sizeof(d1));
@@ -130,9 +134,11 @@ void writePatient(){
     char c;
     do{
         cout << "Enter ID: ", cin >> p1.id;
-        cout << "Enter name: ", cin >> p1.name;
+        cin.ignore();
+        cout << "Enter name: "; cin.getline(p1.name, 30);
         cout << "Enter age: ", cin >> p1.age;
-        cout << "Enter Disease: ", cin >> p1.disease;
+        cin.ignore();
+        cout << "Enter disease: "; cin.getline(p1.disease, 30);
         f.write((char*) &p1, sizeof(p1));
         cout << "Do you want to add another patient Y/N? ";
         cin >> c;
@@ -195,12 +201,14 @@ void updatePatient(){
             if(p1.id == key){
                 cout << "Enter new ID: ";
                 cin >> p1.id;
-                cout << "Enter new name: ";
-                cin >> p1.name;
+                cin.ignore();
+                cout << "Enter new name: "; 
+                cin.getline(p1.name, 30);
                 cout << "Enter new age: ";
                 cin >> p1.age;
-                cout << "Enter new disease: ";
-                cin >> p1.disease; 
+                cin.ignore();
+                cout << "Enter new disease: "; 
+                cin.getline(p1.disease, 30);
                 int pos = f.tellg(), size = sizeof(p1);
                 f.seekp(pos - size, ios::beg);
                 f.write((char*) &p1, sizeof(p1));
@@ -249,10 +257,15 @@ void writeAdminstrator(){
     adminstrator a1;
     char c;
     do{
+        cout << "-----------\n";
+        cout << "|Add admin|\n";
+        cout << "-----------\n";
         cout << "Enter ID: ", cin >> a1.id;
-        cout << "Enter name: ", cin >> a1.name;
-        cout << "Enter age: ", cin >> a1.age;
-        cout << "Enter password: ", cin >> a1.password;
+        cin.ignore();
+        cout << "Enter name: "; cin.getline(a1.name, 30);
+        cout << "Enter age: "; cin >> a1.age;
+        cin.ignore();
+        cout << "Enter password: "; cin.getline(a1.password, 30);
         f.write((char*) &a1, sizeof(a1));
         cout << "Do you want to add another adminstrator Y/N? ";
         cin >> c;
@@ -315,10 +328,11 @@ void updateAdminstrator(){
             if(a1.id == key){
                 cout << "Enter new ID: ";
                 cin >> a1.id;
-                cout << "Enter new name: ";
-                cin >> a1.name; 
-                cout << "Enter new password: ";
-                cin >> a1.password;
+                cin.ignore();
+                cout << "Enter new name: "; 
+                cin.getline(a1.name, 30);
+                cout << "Enter new password: "; 
+                cin.getline(a1.password, 30);
                 int pos = f.tellg(), size = sizeof(a1);
                 f.seekp(pos - size, ios::beg);
                 f.write((char*) &a1, sizeof(a1));
@@ -357,14 +371,14 @@ void deleteAdminstrator(){
     else cout << "Cannot open the file!\n";
 }
 
-bool isAdminstrator(int ID, char Password[]){
+bool isAdminstrator(int ID, char password[]){
     adminstrator a1;
     ifstream f;
     f.open("Adminstrators.txt", ios::in);
     if(f.is_open()){
         f.read((char*) &a1, sizeof(a1));
         while(!f.eof()){
-            if(a1.id == ID && strcmp(a1.password, Password) == 0){
+            if(a1.id == ID && strcmp(a1.password, password) == 0){
                 f.close();
                 return true;
             }
@@ -378,14 +392,15 @@ bool isAdminstrator(int ID, char Password[]){
 
 int main()
 {
-    // If you're using it for the first time remove comment and add an Admin
+    // If you're using it for the first time remove comment to add the first Admin
     // writeAdminstrator();
     int id;
-    char password[20];
+    char password[30];
     cout << "Enter adminstrator ID: ";
     cin >> id;
     cout << "Enter adminstrator password: ";
-    cin >> password;
+    cin.ignore();
+    cin.getline(password, 30);
     if(isAdminstrator(id, password)){
         cout << "---------\n";
         cout << "|Welcome|\n";
