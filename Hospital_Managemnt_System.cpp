@@ -2,7 +2,6 @@
 #include <fstream>
 using namespace std;
 
-
 struct doctor{
     int id, age;
     char name[30], spec[30];
