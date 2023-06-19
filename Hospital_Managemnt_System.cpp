@@ -7,6 +7,7 @@ struct doctor{
     char name[30], spec[30];
 };
 
+
 void writeDoctor(){
     fstream f("Doctor.txt", ios::app);
     doctor d1;
